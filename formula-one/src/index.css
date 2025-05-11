@@ -1,48 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Formula1';
-  src: url('/fonts/Formula1-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@layer base {
-  body {
-    @apply font-titillium bg-f1-light text-f1-black dark:bg-f1-black dark:text-white transition-colors duration-300;
-  }
-  
-  h1, h2, h3, h4, h5 {
-    @apply font-formula;
-  }
-}
-
-@layer components {
-  .card {
-    @apply bg-white dark:bg-f1-gray rounded-lg shadow-md p-4 transition-all hover:shadow-lg;
-  }
-  
-  .btn {
-    @apply px-4 py-2 rounded font-semibold transition-colors;
-  }
-  
-  .btn-primary {
-    @apply bg-f1-red text-white hover:bg-red-700;
-  }
-  
-  .btn-outline {
-    @apply border border-f1-gray dark:border-white text-f1-black dark:text-white hover:bg-f1-gray hover:text-white dark:hover:bg-white dark:hover:text-f1-black;
-  }
-  
-  .nav-link {
-    @apply px-3 py-2 rounded-md font-semibold hover:bg-f1-gray/10 dark:hover:bg-white/10 transition-colors;
-  }
-  
-  .nav-link-active {
-    @apply bg-f1-red text-white hover:bg-f1-red/90;
-  }
+body {
+  @apply bg-gray-100 text-gray-900;
 }
