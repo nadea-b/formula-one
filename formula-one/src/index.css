@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-gray-100 text-gray-900;
+@layer base {
+  body {
+    @apply font-titillium bg-f1-light text-f1-black dark:bg-f1-black dark:text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-f1-red text-white hover:bg-red-700;
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600&display=swap');
+
+@font-face {
+  font-family: 'Formula1';
+  src: url('/fonts/Formula1-Regular.ttf') format('truetype');
 }
