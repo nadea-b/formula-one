@@ -6,6 +6,7 @@ import Footer from './components/common/Footer';
 import HomePage from './pages/HomePage';
 import TeamsPage from './pages/TeamsPage';
 import ComparisonPage from './pages/ComparisonPage';
+import DriversPage from './pages/DriversPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/teams" element={<TeamsPage />} />
                 <Route path="/compare" element={<ComparisonPage />} />
+                <Route path="/drivers" element={<DriversPage />} />
               </Routes>
             </main>
             <Footer />
