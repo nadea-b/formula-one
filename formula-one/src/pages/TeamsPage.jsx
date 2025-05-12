@@ -1,5 +1,7 @@
 import TeamCard from '../components/teams/TeamCard';
 import { fetchTeams } from '../services/dataService';
+import { useState, useEffect } from 'react';
+
 
 const TeamList = () => {
   const [teams, setTeams] = useState([]);
@@ -11,6 +13,9 @@ const TeamList = () => {
       setLoading(true);
       try {
         const data = await fetchTeams();
+        
+        console.log('Fetched teams:', data); // <-- Add this
+
         setTeams(data);
         setError(null);
       } catch (err) {

@@ -1,10 +1,19 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
-const HomePage = () => (
-  <div>
-    <h1 className="text-4xl font-bold text-center text-f1-red">Formula 1 Website</h1>
-    <p className="text-lg text-center mt-4">Welcome to the F1 Stats Hub!</p>
-  </div>
-);
+const HomePage = () => {
+  return (
+    <div className="container mx-auto px-4 py-6">
+      <h1 className="text-3xl font-formula font-bold text-center mb-8">Welcome to F1 Stats</h1>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="card">
+          <h2 className="text-lg font-semibold">Top Teams</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Browse through the top teams of Formula 1.</p>
+          <Link to="/teams" className="text-f1-red hover:underline mt-2">View Teams</Link>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default HomePage;
