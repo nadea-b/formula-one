@@ -1,35 +1,58 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ThemeContext } from './context/ThemeContext';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+import HomePage from './pages/HomePage';
+import TeamsPage from './pages/TeamsPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (darkMode) {
-      root.classList.add('dark');
+    // Check if user has previously set a theme preference
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme === 'dark' || 
+      (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      setDarkMode(true);
     } else {
-      root.classList.remove('dark');
+      document.documentElement.classList.remove('dark');
+      setDarkMode(false);
     }
-  }, [darkMode]);
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode(prevMode => {
+      const newMode = !prevMode;
+      localStorage.setItem('theme', newMode ? 'dark' : 'light');
+      
+      if (newMode) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      
+      return newMode;
+    });
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-f1-light dark:bg-f1-black text-f1-black dark:text-white transition-colors duration-300">
-      <Header />
-
-      <main className="flex-grow p-6">
-        <button
-          onClick={() => setDarkMode(prev => !prev)}
-          className="bg-f1-red text-white px-4 py-2 rounded hover:bg-red-700 transition"
-        >
-          Toggle Theme
-        </button>
-        <h2 className="mt-6 text-2xl font-formula">Welcome to F1 Stats</h2>
-      </main>
-
-      <Footer />
-    </div>
+    <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
+        <Router>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-grow container mx-auto px-4 py-8">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/teams" element={<TeamsPage />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+    </ThemeContext.Provider>
   );
 }
 
