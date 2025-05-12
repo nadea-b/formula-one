@@ -5,6 +5,7 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import HomePage from './pages/HomePage';
 import TeamsPage from './pages/TeamsPage';
+import ComparisonPage from './pages/ComparisonPage';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -47,6 +48,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/teams" element={<TeamsPage />} />
+                <Route path="/compare" element={<ComparisonPage />} />
               </Routes>
             </main>
             <Footer />
