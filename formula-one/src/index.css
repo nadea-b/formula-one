@@ -1,22 +1,73 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  body {
-    @apply font-titillium bg-f1-light text-f1-black dark:bg-f1-black dark:text-white;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply bg-f1-red text-white hover:bg-red-700;
-  }
-}
-
+/* Base imports */
+@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600&display=swap');
 
-@font-face {
-  font-family: 'Formula1';
-  src: url('/fonts/Formula1-Regular.ttf') format('truetype');
+/* Define CSS variables for all colors */
+:root {
+  --f1-red: #e10600;
+  --f1-black: #15151e;
+  --f1-gray: #38383f;
+  --f1-light: #f8f4f4;
+  --mercedes: #00d2be;
+  --redbull: #0600ef;
+  --ferrari: #dc0000;
+  --mclaren: #ff8700;
+  --aston: #006f62;
+  --alpine: #0090ff;
+  --williams: #005aff;
+  --haas: #ffffff;
+  --sauber: #900000;
+  --rb: #1e3d61;
+}
+
+/* Base styles */
+@layer base {
+  body {
+    font-family: "Titillium Web", sans-serif;
+    background-color: var(--f1-light);
+    color: var(--f1-black);
+  }
+  
+  .dark body {
+    background-color: var(--f1-black);
+    color: white;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Formula1', sans-serif;
+  }
+}
+
+/* Component styles */
+@layer components {
+  .btn-primary {
+    background-color: var(--f1-red);
+    color: white;
+  }
+  .btn-primary:hover {
+    background-color: #c00500;
+  }
+  
+  .card {
+    @apply rounded-lg shadow-md p-4;
+    background-color: white;
+  }
+  .dark .card {
+    background-color: var(--f1-gray);
+  }
+  
+  .nav-link {
+    @apply px-3 py-2 transition-colors;
+    color: var(--f1-black);
+  }
+  .dark .nav-link {
+    color: white;
+  }
+  .nav-link:hover {
+    color: var(--f1-red);
+  }
+  
+  .container-f1 {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }

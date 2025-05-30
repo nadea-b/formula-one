@@ -1,3 +1,6 @@
+import React from 'react';
+import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import { useContext } from 'react';
 import { FavoritesContext } from '../../context/FavoritesContext';
 
@@ -6,71 +9,73 @@ const DriverCard = ({ driver }) => {
   
   const isFavorite = isDriverFavorite(driver.id);
   
-  const handleFavoriteToggle = () => {
+  const handleFavoriteClick = () => {
     if (isFavorite) {
       removeFavoriteDriver(driver.id);
     } else {
-      addFavoriteDriver(driver);
+      addFavoriteDriver(driver.id);
     }
   };
-  
-  // Default image if driver.imgUrl is not available
-  const fallbackImage = "https://www.formula1.com/content/dam/fom-website/drivers/Driver%20missing.png.transform/2col/image.png";
-  
+
+  // Determine team color class for styling
+  const getTeamColorClass = () => {
+    const teamColorMap = {
+      'Red Bull Racing': 'bg-blue-800 border-blue-900',
+      'Mercedes': 'bg-teal-500 border-teal-600',
+      'Ferrari': 'bg-red-600 border-red-700',
+      'McLaren': 'bg-orange-500 border-orange-600',
+      'Aston Martin': 'bg-green-600 border-green-700',
+      'Alpine': 'bg-blue-500 border-blue-600',
+      'Williams': 'bg-blue-600 border-blue-700',
+      'AlphaTauri': 'bg-gray-700 border-gray-800',
+      'Alfa Romeo': 'bg-red-500 border-red-600',
+      'Haas F1 Team': 'bg-gray-800 border-gray-900',
+    };
+    
+    return teamColorMap[driver.team] || 'bg-gray-500 border-gray-600';
+  };
+
   return (
-    <div className="card overflow-hidden border border-gray-200 dark:border-f1-gray hover:border-gray-300 dark:hover:border-gray-500 transition-all">
-      <div className={`h-2 bg-${driver.teamColor}`}></div>
-      <div className="flex justify-between items-start p-4">
-        <div>
-          <h3 className="text-lg font-bold">{driver.name}</h3>
-          <div className="flex items-center mt-1">
-            <span className={`inline-block w-6 h-6 rounded-full bg-${driver.teamColor} text-white text-xs flex items-center justify-center mr-2 font-bold`}>
-              {driver.number}
-            </span>
-            <span className="text-sm text-gray-600 dark:text-gray-300">{driver.team}</span>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative">
+      {/* Favorite button */}
+      <button 
+        onClick={handleFavoriteClick}
+        className="absolute top-2 right-2 z-10 bg-white rounded-full p-1 shadow-sm"
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+      >
+        {isFavorite ? (
+          <HeartIconSolid className="h-6 w-6 text-red-500" />
+        ) : (
+          <HeartIconOutline className="h-6 w-6 text-gray-400 hover:text-red-500" />
+        )}
+      </button>
+      
+      {/* Team color banner */}
+      <div className={`h-2 w-full ${getTeamColorClass()}`}></div>
+      
+      <div className="p-4">
+        <h3 className="text-lg font-bold">{driver.name}</h3>
+        <p className="text-gray-600">{driver.team}</p>
+        
+        <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+          <div className="bg-gray-50 p-2 rounded">
+            <p className="text-xs text-gray-500">Wins</p>
+            <p className="font-bold">{driver.wins}</p>
           </div>
-          <p className="text-sm mt-2">
-            <span className="font-semibold">Nationality:</span> {driver.nationality}
-          </p>
+          <div className="bg-gray-50 p-2 rounded">
+            <p className="text-xs text-gray-500">Podiums</p>
+            <p className="font-bold">{driver.podiums}</p>
+          </div>
+          <div className="bg-gray-50 p-2 rounded">
+            <p className="text-xs text-gray-500">Points</p>
+            <p className="font-bold">{driver.points}</p>
+          </div>
         </div>
         
-        <button
-          onClick={handleFavoriteToggle}
-          className="text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-300"
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-        >
-          {isFavorite ? (
-            <svg className="w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          ) : (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-            </svg>
-          )}
-        </button>
-      </div>
-      
-      <div className="px-4 pb-4">
-        <img 
-          src={driver.imgUrl || fallbackImage} 
-          alt={driver.name} 
-          className="w-full h-40 object-contain object-center" 
-        />
-        
-        <div className="grid grid-cols-3 gap-2 text-center mt-4 text-sm">
-          <div className="bg-gray-100 dark:bg-f1-black p-2 rounded">
-            <p className="font-semibold text-f1-red">{driver.points}</p>
-            <p className="text-xs text-gray-600 dark:text-gray-400">Points</p>
-          </div>
-          <div className="bg-gray-100 dark:bg-f1-black p-2 rounded">
-            <p className="font-semibold text-f1-red">{driver.wins}</p>
-            <p className="text-xs text-gray-600 dark:text-gray-400">Wins</p>
-          </div>
-          <div className="bg-gray-100 dark:bg-f1-black p-2 rounded">
-            <p className="font-semibold text-f1-red">{driver.podiums}</p>
-            <p className="text-xs text-gray-600 dark:text-gray-400">Podiums</p>
-          </div>
+        <div className="mt-3">
+          <span className="inline-block bg-gray-100 px-2 py-1 text-xs rounded-full text-gray-700">
+            {driver.nationality}
+          </span>
         </div>
       </div>
     </div>

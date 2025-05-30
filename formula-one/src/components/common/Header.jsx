@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 
 const Header = () => (
-  <header className="bg-f1-black text-white py-4">
+  <header className="bg-gray-900 text-white py-4"> {/* Changed from bg-f1-black */}
     <div className="container mx-auto px-4 flex justify-between items-center">
       <h1 className="text-3xl">
         <Link

@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
+import {
+  getFavoriteDrivers,
+  saveFavoriteDrivers,
+  getFavoriteTeams,
+  saveFavoriteTeams
+} from '../services/storageService';
 
 export const FavoritesContext = createContext({
   favoriteDrivers: [],
@@ -7,55 +13,107 @@ export const FavoritesContext = createContext({
   removeFavoriteDriver: () => {},
   addFavoriteTeam: () => {},
   removeFavoriteTeam: () => {},
-  isDriverFavorite: () => {},
-  isTeamFavorite: () => {}
+  isDriverFavorite: () => false,
+  isTeamFavorite: () => false
 });
 
 export const FavoritesProvider = ({ children }) => {
+  // Initialize with empty arrays
   const [favoriteDrivers, setFavoriteDrivers] = useState([]);
   const [favoriteTeams, setFavoriteTeams] = useState([]);
+  
+  // Add debugging flag to track state changes
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Load favorites from localStorage on initial render
   useEffect(() => {
-    const savedDrivers = localStorage.getItem('favoriteDrivers');
-    const savedTeams = localStorage.getItem('favoriteTeams');
+    console.log("Initializing favorites from localStorage");
+    const storedDrivers = getFavoriteDrivers();
+    const storedTeams = getFavoriteTeams();
     
-    if (savedDrivers) setFavoriteDrivers(JSON.parse(savedDrivers));
-    if (savedTeams) setFavoriteTeams(JSON.parse(savedTeams));
+    console.log("Stored drivers:", storedDrivers);
+    console.log("Stored teams:", storedTeams);
+    
+    setFavoriteDrivers(storedDrivers);
+    setFavoriteTeams(storedTeams);
+    setIsInitialized(true);
   }, []);
 
   // Save favorites to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('favoriteDrivers', JSON.stringify(favoriteDrivers));
-  }, [favoriteDrivers]);
+    // Only save if we've already initialized from localStorage
+    if (!isInitialized) return;
+    
+    console.log("Saving favoriteDrivers to localStorage:", favoriteDrivers);
+    saveFavoriteDrivers(favoriteDrivers);
+  }, [favoriteDrivers, isInitialized]);
 
   useEffect(() => {
-    localStorage.setItem('favoriteTeams', JSON.stringify(favoriteTeams));
+    // Only save if we've already initialized from localStorage
+    if (!isInitialized) return;
+    
+    console.log("Saving favoriteTeams to localStorage:", favoriteTeams);
+    saveFavoriteTeams(favoriteTeams);
+  }, [favoriteTeams, isInitialized]);
+
+  // Convert IDs to strings to ensure consistent comparison
+  const addFavoriteDriver = useCallback((driverId) => {
+    const id = String(driverId);
+    console.log("Adding driver to favorites:", id);
+    
+    setFavoriteDrivers(prev => {
+      // Check if ID already exists (as string)
+      if (!prev.map(String).includes(id)) {
+        console.log("Driver not in favorites, adding");
+        return [...prev, id];
+      }
+      console.log("Driver already in favorites");
+      return prev;
+    });
+  }, []);
+
+  const removeFavoriteDriver = useCallback((driverId) => {
+    const id = String(driverId);
+    console.log("Removing driver from favorites:", id);
+    
+    setFavoriteDrivers(prev => {
+      return prev.filter(existingId => String(existingId) !== id);
+    });
+  }, []);
+
+  const addFavoriteTeam = useCallback((teamId) => {
+    const id = String(teamId);
+    console.log("Adding team to favorites:", id);
+    
+    setFavoriteTeams(prev => {
+      // Check if ID already exists (as string)
+      if (!prev.map(String).includes(id)) {
+        console.log("Team not in favorites, adding");
+        return [...prev, id];
+      }
+      console.log("Team already in favorites");
+      return prev;
+    });
+  }, []);
+
+  const removeFavoriteTeam = useCallback((teamId) => {
+    const id = String(teamId);
+    console.log("Removing team from favorites:", id);
+    
+    setFavoriteTeams(prev => {
+      return prev.filter(existingId => String(existingId) !== id);
+    });
+  }, []);
+
+  const isDriverFavorite = useCallback((driverId) => {
+    const id = String(driverId);
+    return favoriteDrivers.map(String).includes(id);
+  }, [favoriteDrivers]);
+
+  const isTeamFavorite = useCallback((teamId) => {
+    const id = String(teamId);
+    return favoriteTeams.map(String).includes(id);
   }, [favoriteTeams]);
-
-  const addFavoriteDriver = (driver) => {
-    setFavoriteDrivers(prev => [...prev, driver]);
-  };
-
-  const removeFavoriteDriver = (driverId) => {
-    setFavoriteDrivers(prev => prev.filter(driver => driver.id !== driverId));
-  };
-
-  const addFavoriteTeam = (team) => {
-    setFavoriteTeams(prev => [...prev, team]);
-  };
-
-  const removeFavoriteTeam = (teamId) => {
-    setFavoriteTeams(prev => prev.filter(team => team.id !== teamId));
-  };
-
-  const isDriverFavorite = (driverId) => {
-    return favoriteDrivers.some(driver => driver.id === driverId);
-  };
-
-  const isTeamFavorite = (teamId) => {
-    return favoriteTeams.some(team => team.id === teamId);
-  };
 
   return (
     <FavoritesContext.Provider value={{
