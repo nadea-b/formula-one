@@ -10,7 +10,7 @@ export default {
       colors: {
         'f1-red': '#e10600',
         'f1-black': '#15151e',
-        'f1-gray': '#38383f',
+        'f1-gray': '#2e2121',
         'f1-light': '#f8f4f4',
         'mercedes': '#00d2be',
         'redbull': '#0600ef',

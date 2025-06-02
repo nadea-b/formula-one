@@ -39,7 +39,7 @@ const DriverCard = ({ driver }) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative">
       {/* Favorite button */}
       <button 
-        onClick={handleFavoriteClick}
+        onClick={() => toggleFavoriteTeam(team.id)}
         className="absolute top-2 right-2 z-10 bg-white rounded-full p-1 shadow-sm"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >

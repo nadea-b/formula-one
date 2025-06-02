@@ -81,7 +81,7 @@ const StatsDashboard = () => {
       },
       tooltip: {
         backgroundColor: document.documentElement.classList.contains('dark') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-        titleColor: document.documentElement.classList.contains('dark') ? 'white' : 'black',
+        titleColor: document.documentElement.classList.contains('dark') ? 'black' : 'black',
         bodyColor: document.documentElement.classList.contains('dark') ? 'white' : 'black',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1

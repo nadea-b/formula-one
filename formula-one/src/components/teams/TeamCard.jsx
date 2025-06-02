@@ -5,42 +5,21 @@ import { useContext } from 'react';
 import { FavoritesContext } from '../../context/FavoritesContext';
 
 const TeamCard = ({ team }) => {
-  const { isTeamFavorite, addFavoriteTeam, removeFavoriteTeam } = useContext(FavoritesContext);
-  
-  const isFavorite = isTeamFavorite(team.id);
-  
-  const handleFavoriteClick = () => {
-    if (isFavorite) {
-      removeFavoriteTeam(team.id);
-    } else {
-      addFavoriteTeam(team.id);
-    }
-  };
+  const { isTeamFavorite, toggleFavoriteTeam } = useContext(FavoritesContext);
 
-  // Get team color class for styling
-  const getTeamColorClass = () => {
-    const teamColorMap = {
-      'redbull': 'bg-blue-800 border-blue-900',
-      'mercedes': 'bg-teal-500 border-teal-600',
-      'ferrari': 'bg-red-600 border-red-700',
-      'mclaren': 'bg-orange-500 border-orange-600',
-      'astonmartin': 'bg-green-600 border-green-700',
-      'alpine': 'bg-blue-500 border-blue-600',
-      'williams': 'bg-blue-600 border-blue-700',
-      'alphatauri': 'bg-gray-700 border-gray-800',
-      'alfaromeo': 'bg-red-500 border-red-600',
-      'haas': 'bg-gray-800 border-gray-900',
-    };
-    
-    return teamColorMap[team.color] || 'bg-gray-500 border-gray-600';
+  const isFavorite = isTeamFavorite(team.id);
+
+  const handleFavoriteClick = () => {
+    toggleFavoriteTeam(team.id); // just toggle, no need for add/remove
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative">
+    <div className="bg-white dark:bg-f1-gray text-f1-black dark:text-black rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-f1-light relative transition-colors duration-300">
+      
       {/* Favorite button */}
       <button 
-        onClick={handleFavoriteClick}
-        className="absolute top-2 right-2 z-10 bg-white rounded-full p-1 shadow-sm"
+        onClick={() => toggleFavoriteTeam(team.id)}
+        className="absolute top-2 right-2 z-10 bg-white dark:bg-f1-gray rounded-full p-1 shadow-sm"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         {isFavorite ? (
@@ -51,31 +30,39 @@ const TeamCard = ({ team }) => {
       </button>
       
       {/* Team color banner */}
-      <div className={`h-2 w-full ${getTeamColorClass()}`}></div>
+      <div style={{ backgroundColor: team.color }} className="h-2 w-full"></div>
       
       <div className="p-4">
-        <h3 className="text-lg font-bold">{team.name}</h3>
-        <p className="text-gray-600">{team.countryOrigin}</p>
+        {/* Team logo */}
+        {team.logo && (
+          <div className="flex justify-center mb-3">
+            <img src={team.logo} alt={`${team.name} logo`} className="h-12 object-contain" />
+          </div>
+        )}
         
-        <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-          <div className="bg-gray-50 p-2 rounded">
+        {/* Team name and nationality */}
+        <h3 className="text-lg font-bold text-center">{team.name}</h3>
+        <p className="text-gray-600 text-sm text-center">{team.nationality}</p>
+
+        {/* Position badge */}
+        {team.position && (
+          <div className="mt-2 flex justify-center">
+            <span className="text-xs px-2 py-1 bg-red-600 text-white rounded-full shadow">
+              #{team.position} in Championship
+            </span>
+          </div>
+        )}
+        
+        {/* Stats */}
+        <div className="mt-3 grid grid-cols-2 gap-2 text-center">
+          <div className="bg-gray-50 dark:bg-red/10 p-2 rounded">
             <p className="text-xs text-gray-500">Championships</p>
-            <p className="font-bold">{team.championships}</p>
+            <p className="font-bold">{team.championshipsWon ?? 0}</p>
           </div>
-          <div className="bg-gray-50 p-2 rounded">
-            <p className="text-xs text-gray-500">Wins</p>
-            <p className="font-bold">{team.wins}</p>
-          </div>
-          <div className="bg-gray-50 p-2 rounded">
+          <div className="bg-gray-50 dark:bg-red/10 p-2 rounded">
             <p className="text-xs text-gray-500">Points</p>
-            <p className="font-bold">{team.points}</p>
+            <p className="font-bold">{team.points ?? 0}</p>
           </div>
-        </div>
-        
-        <div className="mt-3">
-          <span className="inline-block bg-gray-100 px-2 py-1 text-xs rounded-full text-gray-700">
-            {team.podiums} Podiums
-          </span>
         </div>
       </div>
     </div>
