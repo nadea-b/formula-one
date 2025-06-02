@@ -1,23 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
-import { useContext } from 'react';
 import { FavoritesContext } from '../../context/FavoritesContext';
 
 const DriverCard = ({ driver }) => {
-  const { isDriverFavorite, addFavoriteDriver, removeFavoriteDriver } = useContext(FavoritesContext);
-  
+  const { isDriverFavorite, toggleFavoriteDriver } = useContext(FavoritesContext);
+
   const isFavorite = isDriverFavorite(driver.id);
-  
+
   const handleFavoriteClick = () => {
-    if (isFavorite) {
-      removeFavoriteDriver(driver.id);
-    } else {
-      addFavoriteDriver(driver.id);
-    }
+    toggleFavoriteDriver(driver.id);
   };
 
-  // Determine team color class for styling
+  // Team color mapping for banner
   const getTeamColorClass = () => {
     const teamColorMap = {
       'Red Bull Racing': 'bg-blue-800 border-blue-900',
@@ -31,7 +26,7 @@ const DriverCard = ({ driver }) => {
       'Alfa Romeo': 'bg-red-500 border-red-600',
       'Haas F1 Team': 'bg-gray-800 border-gray-900',
     };
-    
+
     return teamColorMap[driver.team] || 'bg-gray-500 border-gray-600';
   };
 
@@ -39,7 +34,7 @@ const DriverCard = ({ driver }) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative">
       {/* Favorite button */}
       <button 
-        onClick={() => toggleFavoriteTeam(team.id)}
+        onClick={handleFavoriteClick}
         className="absolute top-2 right-2 z-10 bg-white rounded-full p-1 shadow-sm"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
@@ -53,18 +48,27 @@ const DriverCard = ({ driver }) => {
       {/* Team color banner */}
       <div className={`h-2 w-full ${getTeamColorClass()}`}></div>
       
-      <div className="p-4">
+      <div className="p-4 flex flex-col items-center">
+        {/* Driver photo */}
+        {driver.photo && (
+          <img
+            src={driver.photo}
+            alt={`${driver.name} photo`}
+            className="h-20 w-20 rounded-full object-cover mb-3 border border-gray-300"
+            onError={(e) => {
+              e.target.onerror = null; 
+              e.target.src = '/fallback-driver.png'; // fallback image in public folder
+            }}
+          />
+        )}
+
         <h3 className="text-lg font-bold">{driver.name}</h3>
-        <p className="text-gray-600">{driver.team}</p>
+        <p className="text-gray-600 mb-2">{driver.team}</p>
         
-        <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+        <div className="mt-3 grid grid-cols-2 gap-4 text-center w-full max-w-xs">
           <div className="bg-gray-50 p-2 rounded">
             <p className="text-xs text-gray-500">Wins</p>
             <p className="font-bold">{driver.wins}</p>
-          </div>
-          <div className="bg-gray-50 p-2 rounded">
-            <p className="text-xs text-gray-500">Podiums</p>
-            <p className="font-bold">{driver.podiums}</p>
           </div>
           <div className="bg-gray-50 p-2 rounded">
             <p className="text-xs text-gray-500">Points</p>
@@ -72,8 +76,9 @@ const DriverCard = ({ driver }) => {
           </div>
         </div>
         
+        {/* Nationality badge */}
         <div className="mt-3">
-          <span className="inline-block bg-gray-100 px-2 py-1 text-xs rounded-full text-gray-700">
+          <span className="inline-block bg-gray-100 px-3 py-1 text-xs rounded-full text-gray-700">
             {driver.nationality}
           </span>
         </div>

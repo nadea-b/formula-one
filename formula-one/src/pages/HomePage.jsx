@@ -13,7 +13,7 @@ const HomePage = () => {
         <div className="card">
           <h2 className="text-lg font-semibold">Top Teams</h2>
           <p className="text-sm text-gray-600 dark:text-gray-300">Browse through the top teams of Formula 1.</p>
-          <Link to="/teams" className="text-f1-red hover:underline mt-2">View Teams</Link>
+          <Link to="/teams" className="text--f1-red hover:underline mt-2">View Teams</Link>
         </div>
 
         <div className="card">

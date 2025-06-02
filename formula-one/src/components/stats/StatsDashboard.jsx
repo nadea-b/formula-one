@@ -1,58 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { fetchDrivers } from '../../services/dataService'
 
-// Register the necessary chart.js components
+// Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const StatsDashboard = () => {
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  // Use hardcoded data instead of fetching from an external file
+
   useEffect(() => {
-    const driverData = [
-      {
-        "id": "hamilton",
-        "name": "Lewis Hamilton",
-        "team": "Mercedes",
-        "wins": 103,
-        "points": 4400,
-        "podiums": 195,
-        "nationality": "British"
-      },
-      {
-        "id": "verstappen",
-        "name": "Max Verstappen",
-        "team": "Red Bull Racing",
-        "wins": 60,
-        "points": 2700,
-        "podiums": 90,
-        "nationality": "Dutch"
-      },
-      {
-        "id": "leclerc",
-        "name": "Charles Leclerc",
-        "team": "Ferrari",
-        "wins": 5,
-        "points": 1100,
-        "podiums": 30,
-        "nationality": "Monegasque"
+    const loadDrivers = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const data = await fetchDrivers();
+
+        // Sort descending by points, then take top 10
+        const topDrivers = data
+          .sort((a, b) => b.points - a.points)
+          .slice(0, 10);
+
+        setDrivers(topDrivers);
+      } catch (err) {
+        setError(err.message || 'Failed to load drivers');
+      } finally {
+        setLoading(false);
       }
-    ];
-    
-    setDrivers(driverData);
-    setLoading(false);
+    };
+
+    loadDrivers();
   }, []);
 
-  // Prepare data for the bar chart - only create chart data when drivers are loaded
+  // Prepare chart data only when drivers loaded
   const chartData = {
-    labels: drivers.map(driver => driver.name),
+    labels: drivers.map((driver) => driver.name),
     datasets: [
       {
         label: 'Driver Points',
-        data: drivers.map(driver => driver.points),
+        data: drivers.map((driver) => driver.points),
         backgroundColor: 'rgba(255, 99, 132, 0.6)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
@@ -69,47 +58,57 @@ const StatsDashboard = () => {
         color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
         font: {
           size: 18,
-          weight: 'bold'
-        }
+          weight: 'bold',
+        },
       },
       legend: {
         display: true,
         position: 'top',
         labels: {
-          color: document.documentElement.classList.contains('dark') ? 'white' : 'black'
-        }
+          color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
+        },
       },
       tooltip: {
-        backgroundColor: document.documentElement.classList.contains('dark') ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-        titleColor: document.documentElement.classList.contains('dark') ? 'black' : 'black',
+        backgroundColor: document.documentElement.classList.contains('dark')
+          ? 'rgba(0, 0, 0, 0.8)'
+          : 'rgba(255, 255, 255, 0.8)',
+        titleColor: document.documentElement.classList.contains('dark') ? 'white' : 'black',
         bodyColor: document.documentElement.classList.contains('dark') ? 'white' : 'black',
         borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      }
+        borderWidth: 1,
+      },
     },
     scales: {
       y: {
         beginAtZero: true,
         grid: {
-          color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+          color: document.documentElement.classList.contains('dark')
+            ? 'rgba(255, 255, 255, 0.1)'
+            : 'rgba(0, 0, 0, 0.1)',
         },
         ticks: {
           color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
-        }
+        },
       },
       x: {
         grid: {
-          color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+          color: document.documentElement.classList.contains('dark')
+            ? 'rgba(255, 255, 255, 0.1)'
+            : 'rgba(0, 0, 0, 0.1)',
         },
         ticks: {
           color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
-        }
-      }
+        },
+      },
     },
   };
 
   if (error) {
-    return <div className="text-f1-red p-4 text-center max-w-4xl mx-auto mt-8">Error loading data: {error}</div>;
+    return (
+      <div className="text-f1-red p-4 text-center max-w-4xl mx-auto mt-8">
+        Error loading data: {error}
+      </div>
+    );
   }
 
   return (

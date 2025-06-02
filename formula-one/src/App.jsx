@@ -47,7 +47,7 @@ function App() {
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
         <Router>
       
-          <div className="flex flex-col min-h-screen bg-red dark:bg-f1-gray text-f1-black  transition-colors duration-300">
+          <div className="flex flex-col min-h-screen   transition-colors duration-300">
             <Header />
             <main className="flex-grow container mx-auto px-4 py-8">
               <Routes>
