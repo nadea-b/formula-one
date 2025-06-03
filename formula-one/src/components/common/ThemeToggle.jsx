@@ -7,7 +7,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleDarkMode}
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-f1-black hover:bg-gray-300 dark:hover:bg-f1-gray transition-colors"
+      className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-indigo-300 hover:bg-gray-300 dark:hover:bg-f1-gray transition-colors"
       aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {darkMode ? (

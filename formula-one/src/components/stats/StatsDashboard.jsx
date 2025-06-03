@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { fetchDrivers } from '../../services/dataService'
+import { fetchDrivers } from '../../services/dataService';
+import { ThemeContext } from '../../context/ThemeContext'; // Adjust path as needed
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -10,6 +11,7 @@ const StatsDashboard = () => {
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     const loadDrivers = async () => {
@@ -42,8 +44,8 @@ const StatsDashboard = () => {
       {
         label: 'Driver Points',
         data: drivers.map((driver) => driver.points),
-        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: darkMode ? 'rgba(220, 0, 0, 0.6)' : 'rgba(255, 99, 132, 0.6)', // Ferrari red in dark mode
+        borderColor: darkMode ? 'rgba(220, 0, 0, 1)' : 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
       },
     ],
@@ -55,7 +57,7 @@ const StatsDashboard = () => {
     plugins: {
       title: {
         display: true,
-        color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
+        color: darkMode ? '#ffffff' : '#15151e',
         font: {
           size: 18,
           weight: 'bold',
@@ -65,16 +67,14 @@ const StatsDashboard = () => {
         display: true,
         position: 'top',
         labels: {
-          color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
+          color: darkMode ? '#ffffff' : '#15151e',
         },
       },
       tooltip: {
-        backgroundColor: document.documentElement.classList.contains('dark')
-          ? 'rgba(0, 0, 0, 0.8)'
-          : 'rgba(255, 255, 255, 0.8)',
-        titleColor: document.documentElement.classList.contains('dark') ? 'white' : 'black',
-        bodyColor: document.documentElement.classList.contains('dark') ? 'white' : 'black',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
+        titleColor: darkMode ? '#ffffff' : '#15151e',
+        bodyColor: darkMode ? '#ffffff' : '#15151e',
+        borderColor: darkMode ? 'rgba(220, 0, 0, 1)' : 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
       },
     },
@@ -82,22 +82,18 @@ const StatsDashboard = () => {
       y: {
         beginAtZero: true,
         grid: {
-          color: document.documentElement.classList.contains('dark')
-            ? 'rgba(255, 255, 255, 0.1)'
-            : 'rgba(0, 0, 0, 0.1)',
+          color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
         },
         ticks: {
-          color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
+          color: darkMode ? '#ffffff' : '#15151e',
         },
       },
       x: {
         grid: {
-          color: document.documentElement.classList.contains('dark')
-            ? 'rgba(255, 255, 255, 0.1)'
-            : 'rgba(0, 0, 0, 0.1)',
+          color: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
         },
         ticks: {
-          color: document.documentElement.classList.contains('dark') ? 'white' : 'black',
+          color: darkMode ? '#ffffff' : '#15151e',
         },
       },
     },
@@ -105,7 +101,13 @@ const StatsDashboard = () => {
 
   if (error) {
     return (
-      <div className="text-f1-red p-4 text-center max-w-4xl mx-auto mt-8">
+      <div 
+        className="p-4 text-center max-w-4xl mx-auto mt-8"
+        style={{
+          color: '#e10600', // f1-red
+          transition: 'color 0.3s ease'
+        }}
+      >
         Error loading data: {error}
       </div>
     );
@@ -113,11 +115,33 @@ const StatsDashboard = () => {
 
   return (
     <div className="flex justify-center items-center w-full py-8">
-      <div className="stats-dashboard bg-white dark:bg-f1-black text-f1-black dark:text-white p-6 rounded-lg shadow-lg w-full max-w-4xl mx-auto transition-colors duration-300">
-        <h2 className="text-2xl font-bold mb-6 text-center">Driver Points Overview</h2>
+      <div 
+        className="p-6 rounded-lg shadow-lg w-full max-w-4xl mx-auto"
+        style={{
+          backgroundColor: darkMode ? '#292828' : '#ffffff', // f1-black in dark, white in light
+          color: darkMode ? '#ffffff' : '#15151e', // white in dark, f1-black in light
+          transition: 'background-color 0.3s ease, color 0.3s ease'
+        }}
+      >
+        <h2 
+          className="text-2xl font-bold mb-6 text-center"
+          style={{
+            color: darkMode ? '#ffffff' : '#15151e',
+            transition: 'color 0.3s ease'
+          }}
+        >
+          Driver Points Overview
+        </h2>
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <p className="text-f1-gray dark:text-f1-light">Loading driver data...</p>
+            <p 
+              style={{
+                color: darkMode ? '#f8f4f4' : '#38383f', // f1-light in dark, f1-gray in light
+                transition: 'color 0.3s ease'
+              }}
+            >
+              Loading driver data...
+            </p>
           </div>
         ) : (
           <div className="h-80 md:h-96">

@@ -81,7 +81,7 @@ const DriverList = () => {
         
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
           <div className="w-full sm:w-48">
-            <label htmlFor="team-filter" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label htmlFor="team-filter" className="block text-sm font-medium text-gray-700 dark:text-indigo-300 mb-1">
               Filter by Team
             </label>
             <select
@@ -105,11 +105,10 @@ const DriverList = () => {
               id="sort-by"
               value={sortBy}
               onChange={handleSortChange}
-              className="block w-full bg-white dark:bg-f1-gray border border-gray-300 dark:border-gray-600 rounded py-2 px-3 text-sm"
+              className="block w-full bg-white  border border-gray-300 dark:border-gray-600 rounded py-2 px-3 text-sm"
             >
               <option value="points">Points</option>
               <option value="wins">Wins</option>
-              <option value="podiums">Podiums</option>
               <option value="name">Name</option>
             </select>
           </div>

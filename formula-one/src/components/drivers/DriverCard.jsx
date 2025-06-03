@@ -41,7 +41,7 @@ const DriverCard = ({ driver }) => {
         {isFavorite ? (
           <HeartIconSolid className="h-6 w-6 text-red-500" />
         ) : (
-          <HeartIconOutline className="h-6 w-6 text-gray-400 hover:text-red-500" />
+          <HeartIconOutline className="h-6 w-6 text-gray-400 hover:text-purple-500" />
         )}
       </button>
       
@@ -49,18 +49,6 @@ const DriverCard = ({ driver }) => {
       <div className={`h-2 w-full ${getTeamColorClass()}`}></div>
       
       <div className="p-4 flex flex-col items-center">
-        {/* Driver photo */}
-        {driver.photo && (
-          <img
-            src={driver.photo}
-            alt={`${driver.name} photo`}
-            className="h-20 w-20 rounded-full object-cover mb-3 border border-gray-300"
-            onError={(e) => {
-              e.target.onerror = null; 
-              e.target.src = '/fallback-driver.png'; // fallback image in public folder
-            }}
-          />
-        )}
 
         <h3 className="text-lg font-bold">{driver.name}</h3>
         <p className="text-gray-600 mb-2">{driver.team}</p>

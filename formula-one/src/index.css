@@ -42,31 +42,12 @@
 
 /* Component styles */
 @layer components {
-  .btn-primary {
-    background-color: var(--f1-red);
-    color: white;
-  }
-  .btn-primary:hover {
-    background-color: #c00500;
-  }
-  
   .card {
     @apply rounded-lg shadow-md p-4;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
   }
   html.dark .card {
-    background-color: var(--f1-gray);
-  }
-  
-  .nav-link {
-    @apply px-3 py-2 transition-colors;
-    color: var(--f1-black);
-  }
-  html.dark .nav-link {
-    color: white;
-  }
-  .nav-link:hover {
-    color: var(--f1-red);
+    background-color: #292828;
   }
   
   .container-f1 {
