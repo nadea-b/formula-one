@@ -1,0 +1,162 @@
+[
+    {
+      "id": 1,
+      "name": "Red Bull Racing",
+      "color": "redbull",
+      "countryOrigin": "Austria",
+      "points": 623,
+      "championships": 6,
+      "wins": 18,
+      "podiums": 30,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/red-bull-racing-logo.png.transform/2col/image.png",
+      "drivers": [1, 11],
+      "statistics": {
+        "constructorsPosition": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "pointsPerRace": [43, 38, 31, 44, 36, 42, 30, 25, 35, 44, 15, 30, 24, 14, 38, 25, 8, 18, 32, 28]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Mercedes",
+      "color": "mercedes",
+      "countryOrigin": "Germany",
+      "points": 450,
+      "championships": 8,
+      "wins": 5,
+      "podiums": 16,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/mercedes-logo.png.transform/2col/image.png",
+      "drivers": [44, 63],
+      "statistics": {
+        "constructorsPosition": [5, 4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3],
+        "pointsPerRace": [16, 14, 18, 10, 25, 33, 10, 27, 15, 25, 11, 28, 35, 41, 29, 9, 17, 18, 19, 29]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Ferrari",
+      "color": "ferrari",
+      "countryOrigin": "Italy",
+      "points": 590,
+      "championships": 16,
+      "wins": 4,
+      "podiums": 22,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/ferrari-logo.png.transform/2col/image.png",
+      "drivers": [16, 55],
+      "statistics": {
+        "constructorsPosition": [2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2],
+        "pointsPerRace": [23, 43, 24, 22, 28, 22, 33, 19, 22, 22, 30, 16, 24, 35, 25, 20, 43, 34, 29, 23]
+      }
+    },
+    {
+      "id": 4,
+      "name": "McLaren",
+      "color": "mclaren",
+      "countryOrigin": "United Kingdom",
+      "points": 575,
+      "championships": 8,
+      "wins": 5,
+      "podiums": 25,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/mclaren-logo.png.transform/2col/image.png",
+      "drivers": [4, 81],
+      "statistics": {
+        "constructorsPosition": [4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        "pointsPerRace": [17, 12, 22, 34, 22, 25, 25, 33, 27, 25, 34, 26, 26, 15, 15, 31, 31, 23, 22, 18]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Aston Martin",
+      "color": "astonmartin",
+      "countryOrigin": "United Kingdom",
+      "points": 280,
+      "championships": 0,
+      "wins": 0,
+      "podiums": 8,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/aston-martin-logo.png.transform/2col/image.png",
+      "drivers": [14, 18],
+      "statistics": {
+        "constructorsPosition": [3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+        "pointsPerRace": [20, 18, 15, 12, 18, 9, 12, 10, 8, 14, 10, 10, 8, 10, 12, 9, 6, 4, 2, 6]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Alpine",
+      "color": "alpine",
+      "countryOrigin": "France",
+      "points": 120,
+      "championships": 0,
+      "wins": 0,
+      "podiums": 1,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/alpine-logo.png.transform/2col/image.png",
+      "drivers": [10, 31],
+      "statistics": {
+        "constructorsPosition": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
+        "pointsPerRace": [8, 6, 10, 5, 9, 0, 4, 3, 0, 2, 6, 10, 8, 5, 7, 6, 8, 4, 12, 7]
+      }
+    },
+    {
+      "id": 7,
+      "name": "Williams",
+      "color": "williams",
+      "countryOrigin": "United Kingdom",
+      "points": 28,
+      "championships": 9,
+      "wins": 0,
+      "podiums": 0,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/williams-logo.png.transform/2col/image.png",
+      "drivers": [23, 2],
+      "statistics": {
+        "constructorsPosition": [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+        "pointsPerRace": [1, 0, 4, 0, 0, 0, 1, 4, 3, 2, 0, 0, 0, 0, 0, 0, 6, 0, 0, 7]
+      }
+    },
+    {
+      "id": 8,
+      "name": "RB (AlphaTauri)",
+      "color": "alphatauri",
+      "countryOrigin": "Italy",
+      "points": 25,
+      "championships": 0,
+      "wins": 0,
+      "podiums": 0,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/alphatauri-logo.png.transform/2col/image.png",
+      "drivers": [22, 3],
+      "statistics": {
+        "constructorsPosition": [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8],
+        "pointsPerRace": [0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 4, 6, 2, 0, 0, 0, 0, 0, 0, 9]
+      }
+    },
+    {
+      "id": 9,
+      "name": "Haas F1 Team",
+      "color": "haas",
+      "countryOrigin": "United States",
+      "points": 12,
+      "championships": 0,
+      "wins": 0,
+      "podiums": 0,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/haas-logo.png.transform/2col/image.png",
+      "drivers": [27, 20],
+      "statistics": {
+        "constructorsPosition": [10, 10, 10, 10, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+        "pointsPerRace": [0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 6, 0, 1]
+      }
+    },
+    {
+      "id": 10,
+      "name": "Sauber (Alfa Romeo)",
+      "color": "alfaromeo",
+      "countryOrigin": "Switzerland",
+      "points": 6,
+      "championships": 0,
+      "wins": 0,
+      "podiums": 0,
+      "logoUrl": "https://www.formula1.com/content/dam/fom-website/teams/2023/alfa-romeo-logo.png.transform/2col/image.png",
+      "drivers": [77, 24],
+      "statistics": {
+        "constructorsPosition": [9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+        "pointsPerRace": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 0]
+      }
+    }
+  ]
