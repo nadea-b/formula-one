@@ -1,5 +1,7 @@
 import { useContext } from 'react';
-import { Bar } from 'react-chartjs-2';
+import {
+  Bar
+} from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,69 +13,59 @@ import {
 } from 'chart.js';
 import { ThemeContext } from '../../context/ThemeContext';
 
-// Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const ComparisonChart = ({ data, type, title }) => {
+const ComparisonChart = ({ data, title }) => {
   const { darkMode } = useContext(ThemeContext);
 
-  const textColor = darkMode ? '#FFFFFF' : '#15151E';
-  const gridColor = darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+  const textColor = darkMode ? '#ffffff' : '#1e1e1e';
 
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
-        labels: {
-          color: textColor,
-          font: {
-            family: "'Titillium Web', sans-serif",
-            size: 12,
-          },
-        },
+        display: false,
       },
       title: {
         display: !!title,
         text: title,
         color: textColor,
         font: {
-          family: "'Formula1', sans-serif",
-          size: 16,
-          weight: 'bold',
+          size: 18,
         },
       },
       tooltip: {
-        backgroundColor: darkMode ? '#38383F' : 'rgba(255, 255, 255, 0.9)',
-        titleColor: textColor,
-        bodyColor: textColor,
-        borderColor: darkMode ? '#4B4B57' : '#DDDDDD',
-        borderWidth: 1,
-      },
+        callbacks: {
+          label: (context) => `Points: ${context.raw}`
+        }
+      }
     },
     scales: {
       x: {
         ticks: {
-          color: textColor,
+          color: textColor
         },
         grid: {
-          color: gridColor,
-        },
+          color: darkMode ? '#444' : '#ddd'
+        }
       },
       y: {
+        beginAtZero: true,
         ticks: {
-          color: textColor,
+          color: textColor
         },
         grid: {
-          color: gridColor,
-        },
-      },
-    },
+          color: darkMode ? '#444' : '#ddd'
+        }
+      }
+    }
   };
 
   return (
-    <div className="my-6">
-      <Bar data={data} options={options} />
+    <div className="w-full max-w-2xl mx-auto my-6">
+      <div className="h-[350px]">
+        <Bar data={data} options={options} />
+      </div>
     </div>
   );
 };

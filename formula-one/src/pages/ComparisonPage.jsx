@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { fetchDrivers } from '../services/dataService';
 import ComparisonChart from '../components/stats/ComparisonChart';
+import { ThemeContext } from '../context/ThemeContext';
+
+
 
 const ComparisonPage = () => {
   const [drivers, setDrivers] = useState([]);
   const [selectedDrivers, setSelectedDrivers] = useState([]);
   const [chartData, setChartData] = useState(null);
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     const loadDrivers = async () => {
@@ -18,25 +22,22 @@ const ComparisonPage = () => {
   const handleCompare = () => {
     if (selectedDrivers.length === 2) {
       const [d1, d2] = selectedDrivers.map(id => drivers.find(d => d.id === id));
-      const labels = ['Wins', 'Points', 'Podiums']; // customize as needed
+  
       const data = {
-        labels,
+        labels: [d1.name, d2.name],
         datasets: [
           {
-            label: d1.name,
-            data: [d1.wins, d1.points, d1.podiums],
-            backgroundColor: '#e10600',
+            label: 'Points',
+            data: [d1.points, d2.points],
+            backgroundColor: [d1.teamColor, d2.teamColor],
           },
-          {
-            label: d2.name,
-            data: [d2.wins, d2.points, d2.podiums],
-            backgroundColor: '#38383f',
-          },
-        ]
+        ],
       };
+  
       setChartData(data);
     }
   };
+  
 
   const handleSelect = (event, pickerIndex) => {
     const selectedDriverId = event.target.value;
@@ -54,18 +55,26 @@ const ComparisonPage = () => {
       <div className="flex flex-col sm:flex-row gap-4 mb-6">
         {[0, 1].map(index => (
           <select
-            key={index}
-            className="p-2 border rounded"
-            onChange={e => handleSelect(e, index)}
-            defaultValue=""
-          >
-            <option value="" disabled>Select Driver {index + 1}</option>
-            {drivers.map(driver => (
-              <option key={driver.id} value={driver.id}>{driver.name}</option>
-            ))}
-          </select>
+          key={index}
+          className="p-2 border rounded bg-white text-gray-900 border-gray-300 dark:bg-f1-gray dark:text-white dark:border-gray-600"
+          onChange={e => handleSelect(e, index)}
+          defaultValue=""
+        >
+          <option value="" disabled>Select Driver {index + 1}</option>
+          {drivers.map(driver => (
+            <option key={driver.id} value={driver.id}>{driver.name}</option>
+          ))}
+        </select>
+        
         ))}
-        <button onClick={handleCompare} className="btn btn-primary">Compare</button>
+        <button
+            onClick={handleCompare}
+            className={`px-4 py-2 rounded bg-f1-red hover:bg-red-700 transition dark:bg-f1-gray dark:hover:bg-gray-700`}
+            style={{ color: darkMode ? 'white' : 'black' }}
+          >
+            Compare
+          </button>
+
       </div>
 
       {chartData && (

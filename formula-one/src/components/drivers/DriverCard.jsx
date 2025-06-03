@@ -46,7 +46,7 @@ const DriverCard = ({ driver }) => {
         onClick={handleFavoriteClick}
         className="absolute top-2 right-2 z-10 rounded-full p-1 shadow-sm"
         style={{
-          backgroundColor: darkMode ? '#38383f' : '#ffffff',
+          backgroundColor: darkMode ? '#e5e7eb' : '#ffffff',
           transition: 'background-color 0.3s ease'
         }}
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
