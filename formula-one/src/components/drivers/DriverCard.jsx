@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import { FavoritesContext } from '../../context/FavoritesContext';
+import { ThemeContext } from '../../context/ThemeContext';
 
 const DriverCard = ({ driver }) => {
   const { isDriverFavorite, toggleFavoriteDriver } = useContext(FavoritesContext);
+  const { darkMode } = useContext(ThemeContext);
 
   const isFavorite = isDriverFavorite(driver.id);
 
@@ -12,7 +14,6 @@ const DriverCard = ({ driver }) => {
     toggleFavoriteDriver(driver.id);
   };
 
-  // Team color mapping for banner
   const getTeamColorClass = () => {
     const teamColorMap = {
       'Red Bull Racing': 'bg-blue-800 border-blue-900',
@@ -31,42 +32,71 @@ const DriverCard = ({ driver }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative">
+    <div
+      className="rounded-lg shadow-md overflow-hidden border relative transition-transform hover:scale-105"
+      style={{
+        backgroundColor: darkMode ? '#e5e7eb' : '#ffffff',
+        color: darkMode ? '#f3f4f6' : '#1f2937',
+        borderColor: darkMode ? '#4b5563' : '#d1d5db',
+        transition: 'background-color 0.3s ease, color 0.3s ease, transform 0.3s ease'
+      }}
+    >
       {/* Favorite button */}
-      <button 
+      <button
         onClick={handleFavoriteClick}
-        className="absolute top-2 right-2 z-10 bg-white rounded-full p-1 shadow-sm"
+        className="absolute top-2 right-2 z-10 rounded-full p-1 shadow-sm"
+        style={{
+          backgroundColor: darkMode ? '#38383f' : '#ffffff',
+          transition: 'background-color 0.3s ease'
+        }}
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         {isFavorite ? (
           <HeartIconSolid className="h-6 w-6 text-red-500" />
         ) : (
-          <HeartIconOutline className="h-6 w-6 text-gray-400 hover:text-purple-500" />
+          <HeartIconOutline className="h-6 w-6 text-gray-400 hover:text-red-500" />
         )}
       </button>
-      
+
       {/* Team color banner */}
       <div className={`h-2 w-full ${getTeamColorClass()}`}></div>
-      
-      <div className="p-4 flex flex-col items-center">
 
-        <h3 className="text-lg font-bold">{driver.name}</h3>
-        <p className="text-gray-600 mb-2">{driver.team}</p>
-        
+      <div className="p-4 flex flex-col items-center">
+        <h3 style={{ color: '#0d0c0c' }} className="text-lg font-bold">{driver.name}</h3>
+        <p style={{ color: '#4b5563' }} className="mb-2">
+          {driver.team}
+        </p>
+
         <div className="mt-3 grid grid-cols-2 gap-4 text-center w-full max-w-xs">
-          <div className="bg-gray-50 p-2 rounded">
-            <p className="text-xs text-gray-500">Wins</p>
-            <p className="font-bold">{driver.wins}</p>
+          <div className="p-2 rounded">
+            <p
+              className="text-xs"
+              style={{ color: '#6b7280' }}
+            >
+              Wins
+            </p>
+            <p className="font-bold" style={{ color: '#0d0c0c' }}>{driver.wins}</p>
           </div>
-          <div className="bg-gray-50 p-2 rounded">
-            <p className="text-xs text-gray-500">Points</p>
-            <p className="font-bold">{driver.points}</p>
+          <div className="p-2 rounded" >
+            <p
+              className="text-xs"
+              style={{ color: '#6b7280' }}
+            >
+              Points
+            </p>
+            < p className="font-bold" style={{ color: '#0d0c0c' }} > {driver.points}</p>
           </div>
         </div>
-        
+
         {/* Nationality badge */}
         <div className="mt-3">
-          <span className="inline-block bg-gray-100 px-3 py-1 text-xs rounded-full text-gray-700">
+          <span
+            className="inline-block px-3 py-1 text-xs rounded-full"
+            style={{
+              backgroundColor: darkMode ? '#4b5563' : '#f3f4f6',
+              color: darkMode ? '#f3f4f6' : '#374151'
+            }}
+          >
             {driver.nationality}
           </span>
         </div>
