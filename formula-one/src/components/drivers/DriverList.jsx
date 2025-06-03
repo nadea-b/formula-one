@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 import DriverCard from './DriverCard';
 import { fetchDrivers } from '../../services/dataService';
-import { ThemeContext } from '../../context/ThemeContext'; // ✅ Import ThemeContext
+import { ThemeContext } from '../../context/ThemeContext';
 
 const DriverList = () => {
-  const { darkMode } = useContext(ThemeContext); // ✅ Use ThemeContext
+  const { darkMode } = useContext(ThemeContext);
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
